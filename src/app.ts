@@ -1,14 +1,17 @@
 import express, { Application } from 'express';
+import Database from './database/connection';
 
 class App {
   public app: Application;
   public port: string;
   public env: string;
+  public database: Database;
 
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
     this.env = process.env.NODE_ENV;
+    this.database = new Database();
 
     this.initializeMiddleware();
   }
@@ -22,6 +25,10 @@ class App {
     this.app.listen(this.port, () => {
       console.log(`App is listening on port ${this.port}`);
     });
+  }
+
+  public connectDatabase(): void {
+    this.database.connect();
   }
 }
 
