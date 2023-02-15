@@ -1,4 +1,5 @@
 import mongoose, { Mongoose } from 'mongoose';
+import seed from './seed';
 
 class Database {
   private connection: Mongoose;
@@ -13,6 +14,7 @@ class Database {
     this.connection.set('strictQuery', false);
     this.connection.connect(this.url).then(() => {
       console.log('Database connected');
+      seed();
     })
       .catch((err) => {
         console.log(err);
