@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { IProductSubCategory } from 'src/interfaces/product';
+import { IProductSubCategory } from 'src/interfaces/product.interface';
 
 const productSubCategory = new Schema<IProductSubCategory>({
   name: {
@@ -7,12 +7,10 @@ const productSubCategory = new Schema<IProductSubCategory>({
     required: true,
     unique: true,
   },
-  category: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'ProductSubCategory'
-    }
-  ]
+  category: {
+    type: Schema.Types.ObjectId,
+    ref: 'ProductCategory'
+  }
 });
 
 const ProductSubCategory = model<IProductSubCategory>('ProductSubCategory', productSubCategory);
