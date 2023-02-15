@@ -1,5 +1,7 @@
 import express, { Application } from 'express';
 import Database from './database/connection';
+import Route from './interfaces/route.interface';
+import errorMiddleware from './middlewares/error.middleware';
 
 class App {
   public app: Application;
@@ -7,18 +9,30 @@ class App {
   public env: string;
   public database: Database;
 
-  constructor() {
+  constructor(routes: Route[]) {
     this.app = express();
     this.port = process.env.PORT;
     this.env = process.env.NODE_ENV;
     this.database = new Database();
 
     this.initializeMiddleware();
+    this.initializeRoutes(routes);
+    this.initializeErrorhandling();
   }
 
   private initializeMiddleware(): void {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
+  }
+
+  private initializeRoutes(routes: Route[]): void {
+    routes.forEach(route => {
+      this.app.use('/api', route.router);
+    });
+  }
+
+  private initializeErrorhandling(): void {
+    this.app.use(errorMiddleware);
   }
 
   public listen(): void {
