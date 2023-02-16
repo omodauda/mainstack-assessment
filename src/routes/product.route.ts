@@ -19,7 +19,14 @@ class ProductRoute implements Route {
 
     this.router
       .route(`${this.path}/create`)
-      .post(multerImageUpload.array('image'), this.ProductController.createProduct);
+      .post(
+        multerImageUpload.array('image'),
+        this.ProductController.createProduct
+      );
+
+    this.router
+      .route(`${this.path}`)
+      .get(this.ProductController.getAllProducts);
   }
 }
 
