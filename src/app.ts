@@ -32,6 +32,9 @@ class App {
     routes.forEach(route => {
       this.app.use('/api', route.router);
     });
+    this.app.get('/api/doc', (req, res) => {
+      res.redirect('https://documenter.getpostman.com/view/11291043/2s93CGRb2Y');
+    });
   }
 
   private initializeErrorhandling(): void {
