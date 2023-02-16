@@ -107,4 +107,22 @@ export default class ProductController {
       next(error);
     }
   };
+
+  public getProductById = async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    try {
+      const product = await Product.findById(id);
+      if (!product) {
+        throw new HttpException(400, 'product not found');
+      }
+      return res
+        .status(200)
+        .json({
+          status: 'success',
+          data: product
+        });
+    } catch (error) {
+      next(error);
+    }
+  };
 }

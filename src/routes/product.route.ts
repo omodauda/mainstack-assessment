@@ -27,6 +27,10 @@ class ProductRoute implements Route {
     this.router
       .route(`${this.path}`)
       .get(this.ProductController.getAllProducts);
+
+    this.router
+      .route(`${this.path}/:id`)
+      .get(this.ProductController.getProduct);
   }
 }
 
