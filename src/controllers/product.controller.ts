@@ -68,13 +68,40 @@ export default class ProductController {
   };
 
   public getAllProducts = async (req: Request, res: Response, next: NextFunction) => {
+    //pagination
+    let _pageNumber: string;
+    let _size: string;
+
+    if (req.query.pageNo) {
+      _pageNumber = req.query.pageNo.toString();
+    }
+    if (req.query.size) {
+      _size = req.query.size.toString();
+    }
+
+    const pageNumber = parseInt(_pageNumber, 10);
+    const size = parseInt(_size, 10);
+    const skip = size * (pageNumber - 1) || 0;
+    const limit = size || 10;
+
     try {
-      const products = await Product.find().sort({ createdAt: 'desc' });
+      if (pageNumber <= 0) {
+        throw new HttpException(400, 'invalid page number, should start at 1');
+      }
+      const products = await Product.find({}, {}, { limit, skip }).sort({ createdAt: 'desc' });
+      const totalCount = await Product.count();
+      const totalPages = Math.ceil(totalCount / size);
+      const data = {
+        data: products,
+        total: totalCount,
+        totalPages,
+        currentPage: pageNumber
+      };
       return res
         .status(200)
         .json({
           status: 'success',
-          data: products
+          data
         });
     } catch (error) {
       next(error);
