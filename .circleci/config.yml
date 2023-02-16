@@ -29,10 +29,10 @@ workflows:
       - build:
           filters:
             branches:
-              only: [develop]
+              only: [main]
       - deploy:
           requires:
             - build
           filters:
             branches:
-              only: [develop]
+              only: [main]
