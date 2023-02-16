@@ -1,0 +1,38 @@
+version: 2.1
+orbs:
+  node: circleci/node@5.0.3
+  heroku: circleci/heroku@2.0.0
+jobs:
+  build:
+    executor: node/default
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run:
+          command: |
+            npm run build
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .
+  deploy:
+    executor: heroku/default
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - heroku/deploy-via-git:
+          force: true
+workflows:
+  heroku_deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: [develop]
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: [develop]
