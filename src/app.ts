@@ -1,7 +1,10 @@
+import dotenv from 'dotenv';
 import express, { Application } from 'express';
 import Database from './database/connection';
 import Route from './interfaces/route.interface';
 import errorMiddleware from './middlewares/error.middleware';
+
+dotenv.config();
 
 class App {
   public app: Application;
