@@ -22,5 +22,5 @@ export interface IProduct {
 
 export interface IProductImages {
   url: string;
-  id: string;
+  public_id: string;
 }
