@@ -159,4 +159,26 @@ export default class ProductController {
       next(error);
     }
   };
+
+  public deleteProduct = async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    try {
+      const product = await Product.findById(id);
+      if (!product) {
+        throw new HttpException(400, 'product not found');
+      }
+      for (const image of product.images) {
+        await this.Cloudinary.deleteImage(image.public_id);
+      }
+      await Product.findByIdAndDelete(id);
+      return res
+        .status(200)
+        .json({
+          status: 'success',
+          message: 'product deleted successfully'
+        });
+    } catch (error) {
+      next(error);
+    }
+  };
 }

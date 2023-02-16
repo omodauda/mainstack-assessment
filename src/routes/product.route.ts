@@ -36,7 +36,8 @@ class ProductRoute implements Route {
       .patch(
         validationMiddleware(updateProductValidation),
         this.ProductController.updateProduct
-      );
+      )
+      .delete(this.ProductController.deleteProduct);
   }
 }
 
