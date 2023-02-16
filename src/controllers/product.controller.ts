@@ -66,4 +66,18 @@ export default class ProductController {
       next(error);
     }
   };
+
+  public getAllProducts = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const products = await Product.find().sort({ createdAt: 'desc' });
+      return res
+        .status(200)
+        .json({
+          status: 'success',
+          data: products
+        });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
