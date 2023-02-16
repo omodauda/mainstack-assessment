@@ -125,4 +125,38 @@ export default class ProductController {
       next(error);
     }
   };
+
+  public updateProduct = async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    try {
+      const product = await Product.findById(id);
+      if (!product) {
+        throw new HttpException(400, 'product not found');
+      }
+
+      if (req.body.category) {
+        const existingCategory = await ProductCategory.findById(req.body.category);
+        if (!existingCategory) {
+          throw new HttpException(400, 'invalid product category');
+        }
+      }
+
+      if (req.body.subcategory) {
+        const existingSubCategory = await ProductSubCategory.findById(req.body.subcategory);
+        if (!existingSubCategory) {
+          throw new HttpException(400, 'invalid product subcategory');
+        }
+      }
+
+      await Product.findByIdAndUpdate(id, req.body);
+      return res
+        .status(200)
+        .json({
+          status: 'success',
+          message: 'product updated successfully'
+        });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
