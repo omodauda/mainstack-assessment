@@ -1,4 +1,4 @@
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/omodauda/mainstack-assessment/tree/develop.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/omodauda/mainstack-assessment/tree/main)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/omodauda/mainstack-assessment/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/omodauda/mainstack-assessment/tree/main)
 
 - [API URL](https://omodauda-ecommerce-api.herokuapp.com)
 - [API DOC URL](https://omodauda-ecommerce-api.herokuapp.com/api/doc)
